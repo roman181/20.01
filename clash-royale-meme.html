@@ -1,1 +1,406 @@
-<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Clash Royale Style Game</title>\n    <style>\n        body { font-family: Arial, sans-serif; background-color: #f0f0f0; display: flex; justify-content: center; align-items: center; height: 100vh; }\n        #game { background: #fff; border: 1px solid #ccc; width: 600px; height: 400px; position: relative; }\n        .card { width: 100px; height: 150px; margin: 10px; display: inline-block; cursor: pointer; }\n        .pepe { background-image: url('path_to_pepe_image'); }\n        .pinguin { background-image: url('path_to_pinguin_image'); }\n        .pepa { background-image: url('path_to_pepa_image'); }\n    </style>\n</head>\n<body>\n    <div id="game">\n        <div class="card pepe" onclick="deployCharacter('Pepe Frosch')">Pepe Frosch</div>\n        <div class="card pinguin" onclick="deployCharacter('Pinguin')">Pinguin</div>\n        <div class="card pepa" onclick="deployCharacter('Pepa Schweine')">Pepa Schweine</div>\n    </div>\n    <script>\n        function deployCharacter(name) {\n            const gameArea = document.getElementById('game');\n            const newCharacter = document.createElement('div');\n            newCharacter.innerText = name;\n            newCharacter.style.position = 'absolute';\n            newCharacter.style.bottom = '0';\n            newCharacter.style.left = Math.random() * (gameArea.clientWidth - 100) + 'px';\n            gameArea.appendChild(newCharacter);\n            console.log(name + ' deployed!');\n        }\n    </script>\n</body>\n</html>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clash Royale Meme - Pepe vs Penguin vs Pepa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .game-container {
+            background: #1a1a2e;
+            border-radius: 15px;
+            padding: 20px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            color: #fff;
+        }
+        
+        .game-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .game-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .arena {
+            background: linear-gradient(to bottom, #0f4c75, #3282b8);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .player-section {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+        
+        .player {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .player h2 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+        
+        .health-bar {
+            background: #333;
+            height: 25px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .health {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ffd93d);
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: bold;
+        }
+        
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 2px solid #ffd93d;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 217, 61, 0.5);
+        }
+        
+        .card-emoji {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+        
+        .card-name {
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 3px;
+        }
+        
+        .card-cost {
+            background: #ff6b6b;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            display: inline-block;
+        }
+        
+        .character {
+            position: absolute;
+            font-size: 3em;
+            cursor: move;
+            user-select: none;
+            filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+        }
+        
+        .character.pepe {
+            left: 5%;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .character.penguin {
+            right: 5%;
+            animation: float 3s ease-in-out infinite 1s;
+        }
+        
+        .character.pepa {
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%);
+            animation: float 3s ease-in-out infinite 0.5s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .info {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .game-status {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e72);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            font-size: 1em;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: scale(1.05);
+        }
+        
+        button:active {
+            transform: scale(0.95);
+        }
+        
+        .mana {
+            font-size: 1.3em;
+            color: #6bcf7f;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1>⚔️ CLASH ROYALE MEME ⚔️</h1>
+            <p>Pepe Frosch 🐸 vs Pinguin 🐧 vs Pepa Schweine 🐷</p>
+        </div>
+        
+        <div class="arena">
+            <div class="character pepe">🐸</div>
+            <div class="character penguin">🐧</div>
+            <div class="character pepa">🐷</div>
+        </div>
+        
+        <div class="player-section">
+            <div class="player">
+                <h2>🐸 Pepe Frosch</h2>
+                <div class="health-bar">
+                    <div class="health" id="pepeHealth" style="width: 100%;">100/100</div>
+                </div>
+            </div>
+            <div class="player">
+                <h2>🐧 Pinguin</h2>
+                <div class="health-bar">
+                    <div class="health" id="penguinHealth" style="width: 100%;">100/100</div>
+                </div>
+            </div>
+            <div class="player">
+                <h2>🐷 Pepa Schweine</h2>
+                <div class="health-bar">
+                    <div class="health" id="pepaHealth" style="width: 100%;">100/100</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="player-section">
+            <div style="text-align: center; flex: 1;">
+                <p class="mana">💎 Mana: <span id="mana">5</span>/10</p>
+            </div>
+        </div>
+        
+        <div class="cards-container" id="cardsContainer"></div>
+        
+        <div class="info">
+            <div class="game-status" id="gameStatus">🎮 Karten auswählen zum Spielen!</div>
+            <button onclick="resetGame()">🔄 Neues Spiel</button>
+        </div>
+    </div>
+    
+    <script>
+        const cards = [
+            { name: "Frosch Kick", emoji: "🐸", cost: 2, damage: 15 },
+            { name: "Pinguin Stomp", emoji: "🐧", cost: 3, damage: 20 },
+            { name: "Pepa Charge", emoji: "🐷", cost: 2, damage: 18 },
+            { name: "Mega Combo", emoji: "💥", cost: 5, damage: 50 },
+        ];
+        
+        let gameState = {
+            pepeHP: 100,
+            penguinHP: 100,
+            pepaHP: 100,
+            mana: 5,
+            maxMana: 10,
+            gameOver: false,
+            turn: 0
+        };
+        
+        function initGame() {
+            const container = document.getElementById('cardsContainer');
+            container.innerHTML = '';
+            
+            cards.forEach((card, index) => {
+                const cardEl = document.createElement('div');
+                cardEl.className = 'card';
+                cardEl.innerHTML = `
+                    <div class="card-emoji">${card.emoji}</div>
+                    <div class="card-name">${card.name}</div>
+                    <div class="card-cost">💎 ${card.cost}</div>
+                `;
+                cardEl.onclick = () => playCard(index, card);
+                container.appendChild(cardEl);
+            });
+        }
+        
+        function playCard(index, card) {
+            if (gameState.gameOver) {
+                document.getElementById('gameStatus').textContent = '🏁 Spiel vorbei! Starte ein neues Spiel.';
+                return;
+            }
+            
+            if (gameState.mana < card.cost) {
+                document.getElementById('gameStatus').textContent = '❌ Nicht genug Mana! Warte...';
+                return;
+            }
+            
+            gameState.mana -= card.cost;
+            gameState.turn++;
+            
+            // Zufälliges Ziel
+            const targets = [
+                { name: 'pepe', hp: gameState.pepeHP },
+                { name: 'penguin', hp: gameState.penguinHP },
+                { name: 'pepa', hp: gameState.pepaHP }
+            ];
+            
+            const target = targets[Math.floor(Math.random() * targets.length)];
+            
+            // Schaden anwenden
+            gameState[target.name + 'HP'] -= card.damage;
+            
+            updateUI();
+            
+            document.getElementById('gameStatus').textContent = 
+                `${card.emoji} ${card.name} trifft ${target.name}! -${card.damage} HP`;
+            
+            // AI macht Zug nach kurzer Verzögerung
+            setTimeout(aiTurn, 1000);
+        }
+        
+        function aiTurn() {
+            gameState.mana = Math.min(gameState.mana + 1, gameState.maxMana);
+            
+            // AI wählt Karte
+            const affordableCards = cards.filter(c => c.cost <= gameState.mana);
+            
+            if (affordableCards.length > 0) {
+                const aiCard = affordableCards[Math.floor(Math.random() * affordableCards.length)];
+                gameState.mana -= aiCard.cost;
+                
+                const playerTargets = [
+                    { name: 'Du', key: 'pepeHP', emoji: '🐸' }
+                ];
+                
+                const target = playerTargets[0];
+                gameState.pepeHP -= aiCard.damage;
+                
+                document.getElementById('gameStatus').textContent = 
+                    `🤖 AI spielt ${aiCard.emoji} ${aiCard.name}! Du nimmst -${aiCard.damage} Schaden`;
+            }
+            
+            updateUI();
+        }
+        
+        function updateUI() {
+            // Health Bars
+            document.getElementById('pepeHealth').style.width = 
+                (Math.max(0, gameState.pepeHP) / 100 * 100) + '%';
+            document.getElementById('pepeHealth').textContent = 
+                Math.max(0, gameState.pepeHP) + '/100';
+            
+            document.getElementById('penguinHealth').style.width = 
+                (Math.max(0, gameState.penguinHP) / 100 * 100) + '%';
+            document.getElementById('penguinHealth').textContent = 
+                Math.max(0, gameState.penguinHP) + '/100';
+            
+            document.getElementById('pepaHealth').style.width = 
+                (Math.max(0, gameState.pepaHP) / 100 * 100) + '%';
+            document.getElementById('pepaHealth').textContent = 
+                Math.max(0, gameState.pepaHP) + '/100';
+            
+            // Mana
+            document.getElementById('mana').textContent = gameState.mana;
+            
+            // Check Win/Lose
+            let alive = 0;
+            if (gameState.pepeHP > 0) alive++;
+            if (gameState.penguinHP > 0) alive++;
+            if (gameState.pepaHP > 0) alive++;
+            
+            if (gameState.pepeHP <= 0) {
+                document.getElementById('gameStatus').textContent = '💀 Pepe Frosch ist besiegt! Pinguin und Pepa gewinnen!';
+                gameState.gameOver = true;
+            } else if (gameState.penguinHP <= 0 && gameState.pepaHP <= 0) {
+                document.getElementById('gameStatus').textContent = '🎉 Du gewinnst! Pepe Frosch triumphiert!';
+                gameState.gameOver = true;
+            } else if (alive === 1) {
+                gameState.gameOver = true;
+            }
+        }
+        
+        function resetGame() {
+            gameState = {
+                pepeHP: 100,
+                penguinHP: 100,
+                pepaHP: 100,
+                mana: 5,
+                maxMana: 10,
+                gameOver: false,
+                turn: 0
+            };
+            document.getElementById('gameStatus').textContent = '🎮 Karten auswählen zum Spielen!';
+            updateUI();
+        }
+        
+        // Start
+        initGame();
+        updateUI();
+    </script>
+</body>
+</html>
