@@ -1,48 +1,41 @@
-// player.js
-
-class Player {
-    constructor(name, health, level) {
+class Character {
+    constructor(name, model, animationStates, weaponType) {
         this.name = name;
-        this.health = health;
-        this.level = level;
+        this.model = model;
+        this.animationStates = animationStates;
+        this.weaponType = weaponType;
     }
 
-    takeDamage(damage) {
-        this.health -= damage;
-        if (this.health < 0) this.health = 0;  // Prevent negative health
+    loadModel() {
+        // Logic to load the model
+        console.log(`Loading model for ${this.name}: ${this.model}`);
     }
 
-    heal(amount) {
-        this.health += amount;
+    setAnimation(state) {
+        if (this.animationStates.includes(state)) {
+            console.log(`${this.name} is now in ${state} state.`);
+        } else {
+            console.log(`Animation state ${state} is not valid for ${this.name}.`);
+        }
     }
 
-    levelUp() {
-        this.level += 1;
-        this.health += 10;  // Increase health on level up
-    }
-}
-
-class CharacterManagement {
-    constructor() {
-        this.players = [];
-    }
-
-    addPlayer(player) {
-        this.players.push(player);
-    }
-
-    removePlayer(playerName) {
-        this.players = this.players.filter(player => player.name !== playerName);
-    }
-
-    getPlayer(playerName) {
-        return this.players.find(player => player.name === playerName);
+    equipWeapon(weapon) {
+        if (weapon === this.weaponType) {
+            console.log(`${this.name} equipped ${weapon}.`);
+        } else {
+            console.log(`${this.name} cannot equip ${weapon}, it uses ${this.weaponType}.`);
+        }
     }
 }
 
-// Example Usage:
-const characterManagement = new CharacterManagement();
-const player1 = new Player('Hero', 100, 1);
-characterManagement.addPlayer(player1);
-const player2 = new Player('Villain', 80, 1);
-characterManagement.addPlayer(player2);
+const pingWinn = new Character('Ping-Winn', 'model/ping-winn.glb', ['idle', 'run', 'jump'], 'sword');
+const pepe = new Character('Pepe', 'model/pepe.glb', ['idle', 'run', 'wave'], 'none');
+const pepa = new Character('Pepa', 'model/pepa.glb', ['idle', 'run', 'dance'], 'staff');
+
+pingWinn.loadModel();  // Load model for Ping-Winn
+pingWinn.setAnimation('run');  // Set running animation
+pingWinn.equipWeapon('sword');  // Equip weapon
+pepe.loadModel();  // Load model for Pepe
+pepe.setAnimation('wave');  // Set waving animation
+pepa.loadModel();  // Load model for Pepa
+pepa.setAnimation('dance');  // Set dancing animation
